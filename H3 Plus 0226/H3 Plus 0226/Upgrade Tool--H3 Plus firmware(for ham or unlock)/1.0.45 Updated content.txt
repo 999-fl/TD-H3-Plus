@@ -1,0 +1,14 @@
+V1.0.45
+
+Note: Updating to this version may cause some settings to become invalid.  
+It is recommended to reconfigure the settings or restore factory settings.
+
+- Added a shortcut: long-press 8 in standby mode to enter USB upgrade mode, which will gradually replace the previous method of entering via PTT + 3 during startup.
+- Changed the translation of "Side Tone" to "STE" in the menu.
+- Added a shortcut: long-press 0 to enter the weather forecast.
+- Restored the volume adjustment to the older version for better control of low volumes.
+- Fixed the issue where the main frequency would change when adjusting the volume on the main page in dual-display mode.   
+- Fixed the potential issue where frequencies could be input in channel mode.
+- Fixed other known issues.
+- Fixed the issue in firmware version 1.44 where A/B channel inputs interfered with each other.
+- Regarding programming issues caused by firmware upgrades to versions 1.44 and 1.45, a new CPS will be released soon, followed by compatibility with Chirp.
