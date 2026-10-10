@@ -1,0 +1,73 @@
+{
+  "repo": "999-fl/TD-H3-Plus",
+  "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)",
+  "files_discovered": 18,
+  "firmware_versions": [
+    "1.0.43",
+    "1.0.45",
+    "1.0.47"
+  ],
+  "firmware_files": [
+    {
+      "name": "TID-H3-PlusV1.0.43.fw",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/(Recommend)--Update via Type-C cable/TID-H3-PlusV1.0.43.fw",
+      "size_bytes": 1068896
+    },
+    {
+      "name": "TID-H3-PlusV1.0.45.fw",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/(Recommend)--Update via Type-C cable/TID-H3-PlusV1.0.45.fw",
+      "size_bytes": 1072992
+    },
+    {
+      "name": "TID-H3-Plus-1.0.47.fw",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/(Recommend)--Update via Type-C cable/TID-H3-Plus-1.0.47.fw",
+      "size_bytes": 1081184
+    }
+  ],
+  "standalone_bins": [
+    {
+      "name": "TID-H3-PlusV1.0.43.bin",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/Update-Kendwood port/TID-H3-PlusV1.0.43.bin",
+      "size_bytes": 778240
+    },
+    {
+      "name": "TID-H3-PlusV1.0.45.bin",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/Update-Kendwood port/TID-H3-PlusV1.0.45.bin",
+      "size_bytes": 782336
+    },
+    {
+      "name": "TID-H3-Plus-1.0.47.bin",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/Update-Kendwood port/TID-H3-Plus-1.0.47.bin",
+      "size_bytes": 790528
+    }
+  ],
+  "updater_binaries": [
+    {
+      "name": "H3 Plus updata.exe",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/Update-Kendwood port/H3 Plus updata.exe",
+      "size_bytes": 15936000
+    },
+    {
+      "name": "Update App.exe",
+      "path": "H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/(Recommend)--Update via Type-C cable/Update App.exe",
+      "size_bytes": 6261664
+    }
+  ],
+  "prior_analysis_reports": [
+    "1.0.45 Updated content.txt",
+    "Read it first--Upgrade steps-Type-C.pdf",
+    "H3 plus upgrade ----Read it First----.pdf"
+  ],
+  "verified_findings": [
+    "The repository includes all three firmware package versions and their standalone .bin counterparts.",
+    "The .bin lengths in the repo are exactly 778240, 782336, and 790528 bytes for versions 1.0.43, 1.0.45, and 1.0.47 respectively.",
+    "The Type-C updater binary is present as `Update App.exe`.",
+    "The legacy updater is present as `H3 Plus updata.exe`.",
+    "No binary report or extracted PE strings dump was found in the repo, so strings such as `editKey`, `ENCRYPT NUMBER`, and `usb_update2.bin` remain unverified at the binary level."
+  ],
+  "missing_inputs": [
+    "No independent decompression output, Ghidra project, or PE import dump is present in the repository.",
+    "No precomputed SHA-256 values or manifest files were checked in for the firmware packages.",
+    "No local shell environment was available in this session for direct binary hashing or PE-level static analysis."
+  ]
+}

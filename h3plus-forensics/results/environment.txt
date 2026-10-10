@@ -1,0 +1,13 @@
+This session used the GitHub API for repository inspection only.
+
+Available evidence:
+- Repository: 999-fl/TD-H3-Plus
+- Observed project root: H3 Plus 0226/H3 Plus 0226
+- Firmware packages present: 3
+- Standalone .bin files present: 3
+- Updater binaries present: 2
+- PE/static-analysis toolchain not available in this session
+- Local Python execution environment not available in this session
+- Direct file hashing and binary parsing were not executed here
+
+This means the project can be organized and scripted, but detailed claims about internal package layout or PE imports remain intentionally unverified until a local analysis environment is available.

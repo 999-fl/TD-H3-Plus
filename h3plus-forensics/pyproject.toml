@@ -1,0 +1,14 @@
+[project]
+name = "h3plus-forensics"
+version = "0.1.0"
+description = "Tooling for H3 Plus firmware package inventory, comparison, and static analysis scaffolding"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

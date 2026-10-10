@@ -1,0 +1,12 @@
+# SHA-256 values not generated in this API-only session.
+# GitHub object IDs are recorded below for evidence tracking only.
+# These are not cryptographic SHA-256 digests of the firmware contents.
+
+TID-H3-PlusV1.0.43.fw = 65ee7f1852be8a809a10fd13ed0998d91263de7d
+TID-H3-PlusV1.0.45.fw = 41a07b5435473a8e6d8074b2d2c2cbb95bb29f01
+TID-H3-Plus-1.0.47.fw = 20b0a6988b6dddfe40007a4e6542320c36e793f7
+TID-H3-PlusV1.0.43.bin = daa01b7320ae3b3a90465f34e867c57326160d77
+TID-H3-PlusV1.0.45.bin = 53c23d5cc97d3c73a71bedcec923f7ca58a92132
+TID-H3-Plus-1.0.47.bin = 1ca48f96f2d0316b814f5e07f22c33edc0da1d55
+H3 Plus updata.exe = fc3ce85d08d83ee13b25e4b51eb102abd81a2b39
+Update App.exe = 2e62d91de6ccd1fbe2512ed34ffcceb28df3fb5a
