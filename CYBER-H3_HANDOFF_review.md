@@ -917,3 +917,49 @@ or establish that any firmware change works.
 ### Next action
 
 Inspect and hash the candidate v1.0.50 archives and `decrypted_app.bin`; match the exact hardware/update variant and source image. Then map the existing spectrum sweep on the confirmed target version. Do not implement menu IDs, offsets, data transport, or firmware patches from the conceptual design alone.
+
+## 19. Artifact audit — 2026-10-12
+
+This audit inspected the checked-out repository artifacts only. It did not
+flash hardware, modify firmware bytes, or prove that any candidate can be
+accepted by a radio.
+
+- **CONFIRMED:** The pristine v1.0.47 standalone image is present at
+  `H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/Update-Kendwood port/TID-H3-Plus-1.0.47.bin`,
+  is 790,528 bytes, and hashes to
+  `3b2d198b6d6bcce884ea437cccb253efd705ab72c790c04b704c3da75213deda`.
+  No firmware bytes changed in this audit.
+- **CONFIRMED:** The Type-C v1.0.50 candidate is
+  `h3plus-forensics/NEW FILES/H3 Plus 1.0.50-Update-TypeC/TD-H3-PlusV1.0.50.fw`,
+  827,808 bytes, SHA-256
+  `ab843948ab79871ae911f74688208096b1438d16e660783e7c3adcf3acf416d8`.
+- **CONFIRMED:** The Kenwood v1.0.50 candidate is
+  `h3plus-forensics/NEW FILES/H3 Plus 1.0.50-Update-Kendwood/TD-H3-PlusV1.0.50.bin`,
+  823,296 bytes, SHA-256
+  `0dd16ac8a26b58ef62c4681ac8ee018cfd6a276b81eb2049b33f834da016b40e`.
+  The candidates have different leading bytes and are not byte-identical;
+  no aligned payload equivalence was established. Keep them as separate
+  update artifacts.
+- **CONFIRMED:** The Type-C archive documentation describes PTT+3 and
+  `Update App.exe`; the Kenwood documentation describes PTT+1, CH340,
+  `updata.exe`, 1,000,000 baud, and no UBOOT update. These are distinct
+  delivery procedures.
+- **SUPPORTED HYPOTHESIS:** `decrypted_app.bin` is associated with v1.0.50:
+  it is 802,784 bytes, hashes to
+  `819d1ad327954e2a76f792d90340a50061f026cb7d3b61a37ece591c5636ea1d`,
+  and contains `1.0.50` at file offset `0x9B871` plus `TD-H3` markers.
+  **UNKNOWN:** its exact decryption source, target variant, and relationship
+  to either v1.0.50 update candidate. Its size and bytes do not by
+  themselves prove compatibility or flashability.
+- **Files changed:** `h3plus-forensics/results/input_hashes.sha256`,
+  `h3plus-forensics/docs/INVESTIGATION_LOG.md`, and this handoff.
+- **Commands and tools:** Python 3 `hashlib`, `file`, `unzip -Z1`, archive
+  member SHA-256 checks, and direct byte/header comparisons. Exact artifact
+  hashes are also recorded in the investigation log and hash manifest.
+  Validation passed with `sha256sum -c` (6/6), Python compilation, the
+  comparison CLI smoke check, `pytest -q` (7 passed), and `git diff --check`.
+- **Next concrete action:** inspect the updater/container format and derive
+  whether either v1.0.50 package contains an authenticated/encrypted app
+  region matching `decrypted_app.bin`; keep this static and read-only.
+  Only after exact source linkage is proven should the spectrum path be
+  mapped for that version.
