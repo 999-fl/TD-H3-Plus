@@ -1,12 +1,10 @@
-# SHA-256 values not generated in this API-only session.
-# GitHub object IDs are recorded below for evidence tracking only.
-# These are not cryptographic SHA-256 digests of the firmware contents.
-
-TID-H3-PlusV1.0.43.fw = 65ee7f1852be8a809a10fd13ed0998d91263de7d
-TID-H3-PlusV1.0.45.fw = 41a07b5435473a8e6d8074b2d2c2cbb95bb29f01
-TID-H3-Plus-1.0.47.fw = 20b0a6988b6dddfe40007a4e6542320c36e793f7
-TID-H3-PlusV1.0.43.bin = daa01b7320ae3b3a90465f34e867c57326160d77
-TID-H3-PlusV1.0.45.bin = 53c23d5cc97d3c73a71bedcec923f7ca58a92132
-TID-H3-Plus-1.0.47.bin = 1ca48f96f2d0316b814f5e07f22c33edc0da1d55
-H3 Plus updata.exe = fc3ce85d08d83ee13b25e4b51eb102abd81a2b39
-Update App.exe = 2e62d91de6ccd1fbe2512ed34ffcceb28df3fb5a
+# Evidence manifest generated 2026-10-12 with Python hashlib.sha256.
+# Paths are relative to the repository root. These hashes identify inputs;
+# they do not establish firmware compatibility, decryption provenance, or
+# flashability.
+3b2d198b6d6bcce884ea437cccb253efd705ab72c790c04b704c3da75213deda  H3 Plus 0226/H3 Plus 0226/Upgrade Tool--H3 Plus firmware(for ham or unlock)/Update-Kendwood port/TID-H3-Plus-1.0.47.bin
+819d1ad327954e2a76f792d90340a50061f026cb7d3b61a37ece591c5636ea1d  decrypted_app.bin
+ab843948ab79871ae911f74688208096b1438d16e660783e7c3adcf3acf416d8  h3plus-forensics/NEW FILES/H3 Plus 1.0.50-Update-TypeC/TD-H3-PlusV1.0.50.fw
+0dd16ac8a26b58ef62c4681ac8ee018cfd6a276b81eb2049b33f834da016b40e  h3plus-forensics/NEW FILES/H3 Plus 1.0.50-Update-Kendwood/TD-H3-PlusV1.0.50.bin
+674974bb9fe25b2134bc3aac0b2b43ee1cc7e5a8b51d712de518384d306c4422  h3plus-forensics/NEW FILES/H3_Plus_1.0.50-Update-Kendwood_8724b24f-96d9-4bce-91cb-b24fa191cf74.zip
+e5881bca50716e900ba71a93f9c3085bf32999917237ef1a170f85b5003dcef0  h3plus-forensics/NEW FILES/H3_Plus_1.0.50-Update-TypeC_fde950c4-e385-4102-97c7-d0bb3c2bfd38.zip
