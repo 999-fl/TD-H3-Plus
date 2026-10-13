@@ -1,3 +1,4 @@
+
 name: Patch SpecView Label
 
 on:
@@ -7,12 +8,14 @@ on:
         description: Repository-relative path to decrypted firmware image
         required: true
         default: decrypted_app.bin
+        type: string
 
 permissions:
   contents: read
 
 jobs:
   patch-specview:
+    name: Patch and Verify Firmware
     runs-on: ubuntu-latest
 
     steps:
@@ -22,43 +25,75 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-      - name: Verify source firmware exists and hash matches expected v1.0.50 image
+      - name: Verify source firmware and SHA-256
+        shell: bash
         env:
-          SOURCE_PATH: ${{ github.event.inputs.source_path }}
+          SOURCE_PATH: ${{ inputs.source_path }}
           EXPECTED_SHA256: 819d1ad327954e2a76f792d90340a50061f026cb7d3b61a37ece591c5636ea1d
         run: |
           set -euo pipefail
+
           if [[ ! -f "$SOURCE_PATH" ]]; then
-            echo "Error: source firmware not found at '$SOURCE_PATH' (path is relative to repository root)." >&2
+            echo "Error: Source firmware not found: $SOURCE_PATH" >&2
             exit 1
           fi
 
-          observed_sha256="$(python - <<'PY' "$SOURCE_PATH"
-import hashlib
-import pathlib
-import sys
-print(hashlib.sha256(pathlib.Path(sys.argv[1]).read_bytes()).hexdigest())
-PY
-)"
+          observed_sha256="$(python - "$SOURCE_PATH" <<'PY'
+          import hashlib
+          import pathlib
+          import sys
+
+          source = pathlib.Path(sys.argv[1])
+          print(hashlib.sha256(source.read_bytes()).hexdigest())
+          PY
+          )"
+
+          echo "Observed SHA-256: $observed_sha256"
 
           if [[ "$observed_sha256" != "$EXPECTED_SHA256" ]]; then
-            echo "Error: source hash mismatch for '$SOURCE_PATH'." >&2
+            echo "Error: Source firmware SHA-256 mismatch." >&2
             echo "Expected: $EXPECTED_SHA256" >&2
             echo "Observed: $observed_sha256" >&2
             exit 1
           fi
 
-      - name: Apply guarded SpecView patch
-        env:
-          SOURCE_PATH: ${{ github.event.inputs.source_path }}
+          echo "Source firmware hash verified."
+
+      - name: Set up patch output directory
+        shell: bash
         run: |
           set -euo pipefail
+          mkdir -p h3plus-forensics/patches/output
+
+      - name: Apply guarded SpecView patch
+        shell: bash
+        env:
+          SOURCE_PATH: ${{ inputs.source_path }}
+        run: |
+          set -euo pipefail
+
           cd h3plus-forensics
+
           PYTHONPATH=src python -m h3plus.cli patch-spectrum-label \
             "$GITHUB_WORKSPACE/$SOURCE_PATH" \
             "$GITHUB_WORKSPACE/h3plus-forensics/patches/output/decrypted_app.SpecView.bin"
+
+      - name: Verify patched artifact exists
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OUTPUT="h3plus-forensics/patches/output/decrypted_app.SpecView.bin"
+
+          if [[ ! -s "$OUTPUT" ]]; then
+            echo "Error: Patched artifact is missing or empty." >&2
+            exit 1
+          fi
+
+          echo "Patched artifact size: $(stat -c '%s' "$OUTPUT") bytes"
+          sha256sum "$OUTPUT"
 
       - name: Upload patched firmware artifact
         uses: actions/upload-artifact@v4
