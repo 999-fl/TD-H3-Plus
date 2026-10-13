@@ -1,0 +1,69 @@
+name: Patch SpecView Label
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_path:
+        description: Repository-relative path to decrypted firmware image
+        required: true
+        default: decrypted_app.bin
+
+permissions:
+  contents: read
+
+jobs:
+  patch-specview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify source firmware exists and hash matches expected v1.0.50 image
+        env:
+          SOURCE_PATH: ${{ github.event.inputs.source_path }}
+          EXPECTED_SHA256: 819d1ad327954e2a76f792d90340a50061f026cb7d3b61a37ece591c5636ea1d
+        run: |
+          set -euo pipefail
+          if [[ ! -f "$SOURCE_PATH" ]]; then
+            echo "Error: source firmware not found at '$SOURCE_PATH' (path is relative to repository root)." >&2
+            exit 1
+          fi
+
+          observed_sha256="$(python - <<'PY' "$SOURCE_PATH"
+import hashlib
+import pathlib
+import sys
+print(hashlib.sha256(pathlib.Path(sys.argv[1]).read_bytes()).hexdigest())
+PY
+)"
+
+          if [[ "$observed_sha256" != "$EXPECTED_SHA256" ]]; then
+            echo "Error: source hash mismatch for '$SOURCE_PATH'." >&2
+            echo "Expected: $EXPECTED_SHA256" >&2
+            echo "Observed: $observed_sha256" >&2
+            exit 1
+          fi
+
+      - name: Apply guarded SpecView patch
+        env:
+          SOURCE_PATH: ${{ github.event.inputs.source_path }}
+        run: |
+          set -euo pipefail
+          cd h3plus-forensics
+          PYTHONPATH=src python -m h3plus.cli patch-spectrum-label \
+            "$GITHUB_WORKSPACE/$SOURCE_PATH" \
+            "$GITHUB_WORKSPACE/h3plus-forensics/patches/output/decrypted_app.SpecView.bin"
+
+      - name: Upload patched firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: decrypted_app-SpecView
+          path: h3plus-forensics/patches/output/decrypted_app.SpecView.bin
+          if-no-files-found: error
+          retention-days: 14
