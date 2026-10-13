@@ -47,3 +47,13 @@ PYTHONPATH=src python -m h3plus.cli patch-spectrum-label \
 ```
 
 This command is hash-guarded (`819d1ad3...63ea1d`) and offset-guarded (`0x8A2CC`) so it fails closed on mismatched input. The patch metadata is recorded in `patches/v1050_ui_spectrum_label_patch.json`.
+
+### Run the SpecView patch in GitHub Actions
+
+1. Open **Actions** in this repository and run **Patch SpecView Label**.
+2. Leave `source_path` as `decrypted_app.bin` unless you intentionally use another repository-relative file path.
+3. The workflow verifies source presence and SHA-256 before patching, then runs:
+   `PYTHONPATH=src python -m h3plus.cli patch-spectrum-label INPUT OUTPUT`
+4. Download the `decrypted_app-SpecView` artifact from the workflow run (kept for 14 days).
+
+If `decrypted_app.bin` is not present in the branch you run, the workflow will fail fast. Safest approach: use a private branch with your verified firmware file, run the workflow there, download the artifact, then remove the branch/file if you do not want firmware stored in repository history.
