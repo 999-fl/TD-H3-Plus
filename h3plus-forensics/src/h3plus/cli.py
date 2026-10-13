@@ -13,6 +13,7 @@ from h3plus.firmware_package import component_manifest
 from h3plus.pe_analysis import inspect_pe
 from h3plus.reporting import write_summary
 from h3plus.string_extract import extract_strings
+from h3plus.ui_patch import patch_single_ascii_label
 
 
 def cmd_inventory(args: argparse.Namespace) -> None:
@@ -53,6 +54,20 @@ def cmd_analyze(args: argparse.Namespace) -> None:
     print(summary)
 
 
+def cmd_patch_spectrum_label(args: argparse.Namespace) -> None:
+    """Patch the Spectrum UI label with strict source guards."""
+    result = patch_single_ascii_label(
+        args.source,
+        args.output,
+        search_text=args.search_text,
+        replacement_text=args.replacement_text,
+        expected_sha256=args.expected_sha256,
+        expected_offset=args.expected_offset,
+    )
+    result["offset_hex"] = f"0x{result['offset']:X}"
+    print(json.dumps(result, indent=2))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="H3 Plus forensic analysis CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -81,6 +96,21 @@ def build_parser() -> argparse.ArgumentParser:
     analyze.add_argument("directory")
     analyze.add_argument("--output", default="results/summary.txt")
     analyze.set_defaults(func=cmd_analyze)
+
+    patch = subparsers.add_parser(
+        "patch-spectrum-label",
+        help="Patch Spectrum label in a copied decrypted app image",
+    )
+    patch.add_argument("source", help="Source decrypted app image")
+    patch.add_argument("output", help="Output patched image path")
+    patch.add_argument("--search-text", default="Spectrum")
+    patch.add_argument("--replacement-text", default="SpecView")
+    patch.add_argument(
+        "--expected-sha256",
+        default="819d1ad327954e2a76f792d90340a50061f026cb7d3b61a37ece591c5636ea1d",
+    )
+    patch.add_argument("--expected-offset", type=lambda value: int(value, 0), default=0x8A2CC)
+    patch.set_defaults(func=cmd_patch_spectrum_label)
 
     return parser
 

@@ -34,3 +34,16 @@ python -m h3plus.cli inventory "/path/to/input-directory"
 ## Important note
 
 The early findings listed in the investigation brief are treated as hypotheses, not accepted facts. The outputs in this repo record only what is directly verifiable from the repository contents available in this session.
+
+## First practical UI mod (reversible)
+
+Patch the `Spectrum` menu label to `SpecView` in a copy of `decrypted_app.bin`:
+
+```bash
+cd /home/runner/work/TD-H3-Plus/TD-H3-Plus/h3plus-forensics
+PYTHONPATH=src python -m h3plus.cli patch-spectrum-label \
+  /home/runner/work/TD-H3-Plus/TD-H3-Plus/decrypted_app.bin \
+  /home/runner/work/TD-H3-Plus/TD-H3-Plus/h3plus-forensics/patches/output/decrypted_app.SpecView.bin
+```
+
+This command is hash-guarded (`819d1ad3...63ea1d`) and offset-guarded (`0x8A2CC`) so it fails closed on mismatched input. The patch metadata is recorded in `patches/v1050_ui_spectrum_label_patch.json`.

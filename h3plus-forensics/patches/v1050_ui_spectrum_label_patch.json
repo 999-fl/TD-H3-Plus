@@ -1,0 +1,13 @@
+{
+  "name": "v1050-ui-spectrum-label",
+  "target_file": "decrypted_app.bin",
+  "target_sha256": "819d1ad327954e2a76f792d90340a50061f026cb7d3b61a37ece591c5636ea1d",
+  "offset_hex": "0x8A2CC",
+  "original_ascii": "Spectrum",
+  "replacement_ascii": "SpecView",
+  "original_hex": "537065637472756d",
+  "replacement_hex": "5370656356696577",
+  "reversible": true,
+  "apply_with": "python -m h3plus.cli patch-spectrum-label /absolute/path/to/decrypted_app.bin /absolute/path/to/output/decrypted_app.SpecView.bin",
+  "rollback_with": "python -m h3plus.cli patch-spectrum-label /absolute/path/to/output/decrypted_app.SpecView.bin /absolute/path/to/output/decrypted_app.rollback.bin --search-text SpecView --replacement-text Spectrum --expected-offset 0x8A2CC"
+}
