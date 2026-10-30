@@ -1,9 +1,9 @@
-# CYBER-H3 / TIDRADIO TD-H3 Plus --- Master AI Handoff
+# TIDRADIO TD-H3 Plus --- 
 
 **Last consolidated:** 2026-10-12\
 **Status:** Reverse-engineering and validation tooling has improved, but no radio-feature firmware patch has been implemented or hardware-validated. The original v1.0.47 image was reported unchanged in earlier checks; re-verify its hash before future work. The principal technical blocker remains the insufficiently understood JieLi PI32v2 ROM/platform-service ABI, especially RF-related service contracts. The Library also contains candidate v1.0.50 update archives and a file named `decrypted_app.bin`; their contents, target variant, provenance, and hashes still need to be checked before use.
 
-## 0. Instructions to every future AI
+## 0. Instructions to every future...
 
 This file is the continuity source for separate AI models and
 conversations. Read it before proposing work. First inspect the real
